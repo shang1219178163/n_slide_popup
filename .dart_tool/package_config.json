@@ -161,10 +161,10 @@
       "name": "n_slide_popup",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-12-27T03:44:33.927791Z",
+  "generated": "2025-12-27T04:18:20.538418Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/shang/fvm/versions/3.24.4",
