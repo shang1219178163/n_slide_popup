@@ -1,7 +1,7 @@
 name: n_slide_popup
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/shang1219178163/n_slide_popup
 
 environment:
   sdk: ^3.5.4
