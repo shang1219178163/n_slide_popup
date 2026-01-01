@@ -1,10 +1,15 @@
 # n_slide_popup
+A pop-up window that supports appearing in any direction, it is popup, sheet, dialog, alert, drawer, popup...
 
 ## Getting started
 
-    import 'package:n_slide_popup/n_slide_popup.dart';
+  n_slide_popup: ^0.0.2
 
 ## Usage
+
+```dart
+import 'package:n_slide_popup/n_slide_popup.dart';
+```
 
 ```dart
   Future<void> onPopupRoute() async {

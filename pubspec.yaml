@@ -1,6 +1,7 @@
 name: n_slide_popup
-description: "A flutter pop-up view with its direction from aligment type."
-version: 0.0.1
+description: "A flutter pop-up view with its direction from aligment type. it
+ is popup, sheet, dialog, alert, drawer, popup..."
+version: 0.0.2
 homepage: https://github.com/shang1219178163/n_slide_popup
 
 environment:
