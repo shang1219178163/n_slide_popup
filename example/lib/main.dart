@@ -1,3 +1,11 @@
+//
+//  Main.dart
+//  n_slide_popup
+//
+//  Created by shang on 2025/12/27.
+//  Copyright © 2025/12/27 shang. All rights reserved.
+//
+
 import 'package:flutter/material.dart';
 import 'package:n_slide_popup/n_slide_popup.dart';
 
