@@ -3,9 +3,12 @@ A pop-up window that supports appearing in any direction, it is popup, sheet, di
 
 ## Getting started
 
-  n_slide_popup: ^0.0.2
+  n_slide_popup: ^0.0.3
 
 ## Usage
+
+
+## 1、NSlidePopupRoute
 
 ```dart
 import 'package:n_slide_popup/n_slide_popup.dart';
@@ -60,3 +63,56 @@ import 'package:n_slide_popup/n_slide_popup.dart';
 ![](https://github.com/shang1219178163/n_slide_popup/blob/main/example/assets/images/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-12-27%20at%2011.36.59.png?raw=true)
 ![](https://github.com/shang1219178163/n_slide_popup/blob/main/example/assets/images/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-12-27%20at%2011.37.01.png?raw=true)
 ![](https://github.com/shang1219178163/n_slide_popup/blob/main/example/assets/images/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-12-27%20at%2011.37.04.png?raw=true)
+
+
+## 2、NOverlayDialog
+
+```dart
+import 'package:n_slide_popup/n_slide_popup.dart';
+```
+```dart
+NOverlayDialog.show(
+  context,
+  from: v,
+  barrierColor: Colors.black12,
+  // barrierDismissible: false,
+  onBarrier: () {
+    debugPrint('NOverlayDialog onBarrier');
+  },
+  child: Container(
+    width: 300,
+    height: 300,
+    child: buildContent(
+      title: v.toString(),
+      onTap: () {
+        NOverlayDialog.dismiss();
+        debugPrint('NOverlayDialog onBarrier');
+      },
+    ),
+  ),
+);
+```
+
+#### sheet
+```dart
+NOverlayDialog.sheet(
+  context,
+  child: buildContent(
+    height: 400,
+    margin: EdgeInsets.symmetric(horizontal: 30),
+    onTap: () {
+      NOverlayDialog.dismiss();
+    },
+  ),
+);
+```
+
+#### toast                      
+```dart
+NOverlayDialog.toast(
+  context,
+  hideBarrier: true,
+  from: Alignment.center,
+  message: "This is a Toast!",
+);
+```

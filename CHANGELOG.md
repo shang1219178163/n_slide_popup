@@ -1,5 +1,9 @@
 ## 0.0.2
 
+* TODO: add NOverlayDialog.
+* 
+## 0.0.2
+
 * TODO: add docs.
 
 ## 0.0.1

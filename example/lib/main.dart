@@ -6,6 +6,8 @@
 //  Copyright © 2025/12/27 shang. All rights reserved.
 //
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:n_slide_popup/n_slide_popup.dart';
 
@@ -54,45 +56,140 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var alignment = Alignment.center;
 
+  late final themeData = Theme.of(context);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: themeData.colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text("direction from Alignment."),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              ...alignments.map((e) {
-                var name = e.toString().split('.')[1];
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    elevation: 0,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    minimumSize: const Size(64, 36),
-                  ),
-                  onPressed: () {
-                    alignment = e;
-                    debugPrint("$alignment ${alignment.x} ${alignment.y}");
-                    onPopupRoute();
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              "PopupRoute direction from Alignment.",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            ),
+            buildWrap(
+              onChanged: (v) {
+                alignment = v;
+                debugPrint("$alignment ${alignment.x} ${alignment.y}");
+                onPopupRoute();
+              },
+            ),
+            Divider(),
+            const Text(
+              "OverlayEntry direction from Alignment.",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            ),
+            buildWrap(
+              onChanged: (v) {
+                alignment = v;
+                debugPrint("$alignment ${alignment.x} ${alignment.y}");
+                NOverlayDialog.show(
+                  context,
+                  from: v,
+                  barrierColor: Colors.black12,
+                  // barrierDismissible: false,
+                  onBarrier: () {
+                    debugPrint('NOverlayDialog onBarrier');
                   },
-                  child: Text(
-                    name,
-                    style: TextStyle(color: Colors.white),
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    child: buildContent(
+                      title: v.toString(),
+                      onTap: () {
+                        NOverlayDialog.dismiss();
+                        debugPrint('NOverlayDialog onBarrier');
+                      },
+                    ),
                   ),
                 );
-              }),
-            ],
-          )
-        ],
+              },
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        NOverlayDialog.sheet(
+                          context,
+                          child: buildContent(
+                            height: 400,
+                            margin: EdgeInsets.symmetric(horizontal: 30),
+                            onTap: () {
+                              NOverlayDialog.dismiss();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text("NOverlayDialog.sheet"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NOverlayDialog.toast(
+                          context,
+                          hideBarrier: true,
+                          from: Alignment.center,
+                          message: "This is a Toast!",
+                        );
+                      },
+                      child: Text("NOverlayDialog.toast"),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget buildWrap({required ValueChanged<Alignment> onChanged}) {
+    final list = alignments;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final spacing = 8.0;
+        final rowCount = 3.0;
+        final itemWidth = (constraints.maxWidth - spacing * (rowCount - 1)) / rowCount;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          // crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            ...list.map(
+              (e) {
+                final i = list.indexOf(e);
+                final btnTitle = [e.toString().split(".").last, "(${e.x}, ${e.y})"].join("\n");
+                return GestureDetector(
+                  onTap: () => onChanged(e),
+                  child: Container(
+                    width: itemWidth.truncateToDouble(),
+                    height: itemWidth * 0.618,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.blue),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: Text(btnTitle),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -116,8 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.green,
-          border: Border.all(color: Colors.blue),
-          borderRadius: BorderRadius.all(Radius.circular(0)),
+          // border: Border.all(color: Colors.blue),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: ElevatedButton(
           onPressed: () {
@@ -125,6 +222,27 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           child: Text("dismiss"),
         ),
+      ),
+    );
+  }
+
+  Widget buildContent({double? height, EdgeInsetsGeometry? margin, String? title, VoidCallback? onTap}) {
+    final btnTitle = title ?? "buildContent";
+    return Container(
+      height: height,
+      width: double.infinity,
+      margin: margin,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      child: ElevatedButton(
+        onPressed: () {
+          debugPrint(btnTitle);
+          onTap?.call();
+        },
+        child: Text(btnTitle),
       ),
     );
   }
