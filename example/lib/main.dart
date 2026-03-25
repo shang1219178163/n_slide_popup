@@ -144,6 +144,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                       child: Text("NOverlayDialog.toast"),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NOverlayDialog.drawer(
+                          context,
+                          child: buildContent(
+                            title: "NOverlayManager.drawer",
+                            radius: 0,
+                            onTap: () {
+                              NOverlayDialog.dismiss();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text("NOverlayManager.drawer"),
+                    ),
                   ],
                 );
               },
@@ -226,16 +241,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildContent({double? height, EdgeInsetsGeometry? margin, String? title, VoidCallback? onTap}) {
+  Widget buildContent({
+    double? width,
+    double? height,
+    EdgeInsetsGeometry? margin,
+    double? radius,
+    String? title,
+    VoidCallback? onTap,
+  }) {
     final btnTitle = title ?? "buildContent";
     return Container(
+      width: width,
       height: height,
-      width: double.infinity,
       margin: margin,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.blueAccent,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
       ),
       child: ElevatedButton(
         onPressed: () {
