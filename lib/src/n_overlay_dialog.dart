@@ -39,7 +39,7 @@ class NOverlayDialog {
     controller.dispose();
   }
 
-  /// 显示 BottomSheet
+  /// OverlayEntry, default BottomSheet
   static void show(
     BuildContext context, {
     required Widget child,
@@ -135,7 +135,7 @@ class NOverlayDialog {
     }
   }
 
-  /// 显示
+  /// sheet
   static void sheet(
     BuildContext context, {
     required Widget child,
@@ -156,6 +156,7 @@ class NOverlayDialog {
     );
   }
 
+  /// drawer
   static void drawer(
     BuildContext context, {
     double widthFactor = 0.8,
@@ -180,7 +181,7 @@ class NOverlayDialog {
     );
   }
 
-  /// 显示 BottomSheet
+  /// toast
   static void toast(
     BuildContext context, {
     Widget? child,
@@ -189,7 +190,7 @@ class NOverlayDialog {
     Alignment from = Alignment.center,
     Duration duration = const Duration(milliseconds: 300),
     Curve curve = Curves.easeOutCubic,
-    bool hideBarrier = true,
+    bool hideBarrier = false,
     Duration? autoDismissDuration = const Duration(milliseconds: 2000),
   }) {
     final childDefault = Material(
@@ -212,6 +213,49 @@ class NOverlayDialog {
       from: from,
       duration: duration,
       curve: curve,
+      hideBarrier: hideBarrier,
+      autoDismissDuration: autoDismissDuration,
+    );
+  }
+
+  /// loadding
+  static void loadding(
+    BuildContext context, {
+    Widget? indicator,
+    Widget? child,
+    String message = "",
+    EdgeInsets margin = const EdgeInsets.only(bottom: 34),
+    Alignment from = Alignment.center,
+    Duration duration = const Duration(milliseconds: 300),
+    Curve curve = Curves.easeOutCubic,
+    bool hideBarrier = false,
+    Duration? autoDismissDuration,
+  }) {
+    final childDefault = Material(
+      color: Colors.black.withOpacity(0.7),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (indicator != null) indicator,
+            if (child != null) child,
+          ],
+        ),
+      ),
+    );
+    return show(
+      context,
+      child: Padding(
+        padding: margin,
+        child: childDefault,
+      ),
+      from: from,
+      duration: duration,
+      curve: curve,
+      barrierColor: Colors.transparent,
+      barrierDismissible: false,
       hideBarrier: hideBarrier,
       autoDismissDuration: autoDismissDuration,
     );

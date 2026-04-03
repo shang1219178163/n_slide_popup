@@ -1,3 +1,7 @@
+## 0.1.0
+
+* TODO: NOverlayDialog add loadding funtion.
+* 
 ## 0.0.4
 
 * TODO: NOverlayDialog add drawer funtion.

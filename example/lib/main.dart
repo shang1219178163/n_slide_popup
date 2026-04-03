@@ -8,6 +8,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:n_slide_popup/n_slide_popup.dart';
 
@@ -135,17 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        NOverlayDialog.toast(
-                          context,
-                          hideBarrier: true,
-                          from: Alignment.center,
-                          message: "This is a Toast!",
-                        );
-                      },
-                      child: Text("NOverlayDialog.toast"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
                         NOverlayDialog.drawer(
                           context,
                           child: buildContent(
@@ -158,6 +148,33 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                       child: Text("NOverlayManager.drawer"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NOverlayDialog.toast(
+                          context,
+                          hideBarrier: true,
+                          from: Alignment.center,
+                          message: "This is a Toast!",
+                        );
+                      },
+                      child: Text("NOverlayDialog.toast"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NOverlayDialog.loadding(
+                          context,
+                          indicator: CupertinoActivityIndicator(radius: 16, color: Colors.white),
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: ElevatedButton(
+                              onPressed: NOverlayDialog.dismiss,
+                              child: Text('dismiss'),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text("NOverlayDialog.loading"),
                     ),
                   ],
                 );
@@ -190,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () => onChanged(e),
                   child: Container(
                     width: itemWidth.truncateToDouble(),
-                    height: itemWidth * 0.618,
+                    height: itemWidth * 0.5,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
